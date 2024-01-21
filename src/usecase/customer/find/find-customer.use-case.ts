@@ -2,7 +2,7 @@ import CustomerRepositoryInterface from "../../../domain/customer/repository/cus
 import { InputFindCustomerDto, OutputFindCustomerDto } from "./find-customer.dto";
 
 export class FindCustomerUseCase {
-    customerRepository: CustomerRepositoryInterface;
+    private customerRepository: CustomerRepositoryInterface;
 
     constructor(customerRepository: CustomerRepositoryInterface) {
         this.customerRepository = customerRepository;

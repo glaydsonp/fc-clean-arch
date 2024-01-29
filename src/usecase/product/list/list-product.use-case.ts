@@ -1,3 +1,4 @@
+import ProductInterface from "../../../domain/product/entity/product.interface";
 import ProductRepositoryInterface from "../../../domain/product/repository/product-repository.interface";
 import { OutputListProductDto } from "./list-product.dto";
 
@@ -11,7 +12,16 @@ export class ListProductUseCase {
     async execute(): Promise<OutputListProductDto> {
         const products = await this.productRepository.findAll();
 
-        return { products };
+        return ListProductUseCase.mapper(products);
+    }
 
+    private static mapper(products: ProductInterface[]): OutputListProductDto {
+        return {
+            products: products.map(product => ({
+                id: product.id,
+                name: product.name,
+                price: product.price
+            }))
+        }
     }
 }

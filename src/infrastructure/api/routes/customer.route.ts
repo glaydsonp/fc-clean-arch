@@ -11,7 +11,6 @@ customerRoutes.get('/', async (_req: Request, res: Response) => {
 
     try {
         const customers = await useCase.execute();
-        console.log({ customers: customers.customers })
 
         res.status(200).json(customers.customers);
     } catch (e) {

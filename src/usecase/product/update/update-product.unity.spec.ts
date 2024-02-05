@@ -36,13 +36,6 @@ describe("Unity test update product use case", () => {
         await expect(useCase.execute(input)).rejects.toThrowError("Product not found");
     });
 
-    it("should throw error when product name is missing", async () => {
-        const productRepository = MockProductpository();
-        const useCase = new UpdateProductUseCase(productRepository);
-
-        await expect(useCase.execute({ ...input, name: "" })).rejects.toThrowError("Name is required");
-    });
-
     it("should throw error when product price is lower than zero", async () => {
         const productRepository = MockProductpository();
         const useCase = new UpdateProductUseCase(productRepository);
@@ -50,4 +43,10 @@ describe("Unity test update product use case", () => {
         await expect(useCase.execute({ ...input, price: -15.0 })).rejects.toThrowError("Price must be greater than zero");
     });
 
+    it("should throw error when product name is missing", async () => {
+        const productRepository = MockProductpository();
+        const useCase = new UpdateProductUseCase(productRepository);
+
+        await expect(useCase.execute({ ...input, name: "" })).rejects.toThrowError("Name is required");
+    });
 });

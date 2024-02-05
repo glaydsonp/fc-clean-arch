@@ -42,18 +42,39 @@ describe("Unity test update customer use case", () => {
         await expect(useCase.execute(input)).rejects.toThrowError("Customer not found");
     });
 
-    it("should throw error when customer name is missing", async () => {
-        const customerRepository = MockCustomerRepository();
-        const useCase = new UpdateCustomerUseCase(customerRepository);
-
-        await expect(useCase.execute({ ...input, name: "" })).rejects.toThrowError("Name is required");
-    });
-
     it("should throw error when address street is missing", async () => {
         const customerRepository = MockCustomerRepository();
         const useCase = new UpdateCustomerUseCase(customerRepository);
 
-        await expect(useCase.execute({ ...input, address: { ...input.address, street: '' } })).rejects.toThrowError("Street is required");
+        await expect(useCase.execute(
+            {
+                id: customer.id,
+                name: "John Updated",
+                address: {
+                    street: "",
+                    number: 1234,
+                    zip: "12345-678",
+                    city: "City Updated",
+                },
+            }
+        )).rejects.toThrowError("Street is required");
+    });
+
+    
+    it("should throw error when customer name is missing", async () => {
+        const customerRepository = MockCustomerRepository();
+        const useCase = new UpdateCustomerUseCase(customerRepository);
+
+        await expect(useCase.execute({
+            id: customer.id,
+            name: "",
+            address: {
+                street: "Street Updated",
+                number: 1234,
+                zip: "12345-678",
+                city: "City Updated",
+            },
+        })).rejects.toThrowError("Customer: Name is required");
     });
 
 });
